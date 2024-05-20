@@ -118,13 +118,10 @@ function commander(cmd) {
       addLine("<br>", "command", 80 * commands.length + 50);
       break;
     case "email":
-      addLine('You will get this one when I know you. ', "color2", 80);
-      addLine('', "color2", 80);
+      var subject = "Message from your website";  // Optional subject line
+      var body = "Hello Andrei,\n\nI visited your website and wanted to reach out.\n\n";
+      window.location.href = "mailto:andrei.suslov.dev@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       break;
-      case "mail":
-        addLine("You will get this one when I don't know you. ", "color2", 80);
-        addLine('', "color2", 80);
-        break;
     case "clear":
       setTimeout(function() {
         terminal.innerHTML = '<a id="before"></a>';
