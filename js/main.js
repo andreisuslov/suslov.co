@@ -1,3 +1,8 @@
+let KEY_CODE_RELOAD = 181;
+let KEY_CODE_ENTER = 13;
+let KEY_CODE_UP_ARROW = 38;
+let KEY_CODE_DOWN_ARROW = 40;
+
 let before = document.getElementById("before");
 let liner = document.getElementById("liner");
 let command = document.getElementById("typer"); 
@@ -22,12 +27,12 @@ console.log(
 );
 console.log("%cPassword: '" + password + "' - I wonder what it does?🤔", "color: grey");
 
-//init
+// init
 textarea.value = "";
 command.innerHTML = textarea.value;
 
 function enterKey(e) {
-  if (e.keyCode == 181) {
+  if (e.keyCode == KEY_CODE_RELOAD) {
     document.location.reload(true);
     return;
   }
@@ -48,9 +53,9 @@ function handlePasswordInput(e) {
     pwd = true;
   }
 
-  if (pwd && e.keyCode == 13) {
+  if (pwd && e.keyCode == KEY_CODE_ENTER) {
     processCorrectPassword();
-  } else if (e.keyCode == 13) {
+  } else if (e.keyCode == KEY_CODE_ENTER) {
     processIncorrectPassword();
   }
 }
@@ -73,11 +78,11 @@ function processIncorrectPassword() {
 }
 
 function handleCommandInput(e) {
-  if (e.keyCode == 13) {
+  if (e.keyCode == KEY_CODE_ENTER) {
     processEnterKeyPress();
-  } else if (e.keyCode == 38) {
+  } else if (e.keyCode == KEY_CODE_UP_ARROW) {
     handleUpArrowKeyPress();
-  } else if (e.keyCode == 40) {
+  } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
     handleDownArrowKeyPress();
   }
 }
