@@ -105,12 +105,12 @@ function autocompleteCommand() {
 
   if (foundCommands.length === 0) {  // If no commands match
     clearAvailableCommandsLine();
-  } else if (foundCommands.length === 1 && foundCommands[0] === currentInput) {  // If exactly one command matches and it is an exact match
+  } else if (foundCommands.length === 1) {  // If exactly one command matches
     textarea.value = foundCommands[0];
     command.innerHTML = foundCommands[0];
     tabPressCount = 0;  // Reset tab press count when command is fully autocompleted
     clearAvailableCommandsLine();  // Clear any existing "Available commands:" line
-  } else if (foundCommands.length > 1 || (foundCommands.length === 1 && foundCommands[0] !== currentInput)) {  // If multiple commands match or there's a partial match
+  } else if (foundCommands.length > 1) {  // If multiple commands match
     tabPressCount += 1;
     const style = tabPressCount > 1 ? "color3" : "color2";  // Change style after the first Tab press
     updateCommandLine("Available commands: " + foundCommands.join(", "), style);
