@@ -10,12 +10,13 @@ let command = document.getElementById("typer");
 let textarea = document.getElementById("texter"); 
 let terminal = document.getElementById("terminal");
 
-let git = 0;
+let commandHistoryIndex = 0;
 let pw = false;
 let pwd = false;
 let commands = [];
 let tabPressCount = 0;
 let lastCommand = "";
+let isEditing = false;
 
 setTimeout(function() {
   loopLines(banner, "", 80);
@@ -33,7 +34,6 @@ console.log("%cPassword: '" + password + "' - I wonder what it does?🤔", "colo
 // init
 textarea.value = "";
 command.innerHTML = textarea.value;
-let isEditing = false;
 
 function enterKey(e) {
   if (e.keyCode == KEY_CODE_RELOAD) {
@@ -155,7 +155,7 @@ function updateCommandLine(text, style) {
 
 function processEnterKeyPress() {
   commands.push(command.innerHTML);
-  git = commands.length;
+  commandHistoryIndex = commands.length;
   addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
   commander(command.innerHTML.toLowerCase());
   command.innerHTML = "";
@@ -163,9 +163,9 @@ function processEnterKeyPress() {
 }
 
 function handleUpArrowKeyPress() {
-  if (git != 0) {
-    git -= 1;
-    textarea.value = commands[git];
+  if (commandHistoryIndex != 0) {
+    commandHistoryIndex -= 1;
+    textarea.value = commands[commandHistoryIndex];
     command.innerHTML = textarea.value;
     isEditing = true;
     moveCursorToEnd();
@@ -173,9 +173,9 @@ function handleUpArrowKeyPress() {
 }
 
 function handleDownArrowKeyPress() {
-  if (git != commands.length) {
-    git += 1;
-    textarea.value = commands[git] !== undefined ? commands[git] : "";
+  if (commandHistoryIndex != commands.length) {
+    commandHistoryIndex += 1;
+    textarea.value = commands[commandHistoryIndex] !== undefined ? commands[commandHistoryIndex] : "";
     command.innerHTML = textarea.value;
     isEditing = true;
     moveCursorToEnd();
