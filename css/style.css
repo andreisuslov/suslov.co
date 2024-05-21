@@ -105,6 +105,9 @@ body {
   .color2 {
     color: #E59500;
   }
+  .color3 {
+    color: #ff0000;
+  }
   .command {
     color: #d7447c;
     text-shadow: 0 0 5px #840032; 
