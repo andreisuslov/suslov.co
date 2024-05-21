@@ -11,7 +11,7 @@ let textarea = document.getElementById("texter");
 let terminal = document.getElementById("terminal");
 
 let commandHistoryIndex = 0;
-let pw = false;
+let isPasswordInputActive = false;
 let pwd = false;
 let commands = [];
 let tabPressCount = 0;
@@ -41,7 +41,7 @@ function enterKey(e) {
     return;
   }
 
-  if (pw) {
+  if (isPasswordInputActive) {
     handlePasswordInput(e);
   } else {
     handleCommandInput(e);
@@ -73,7 +73,7 @@ function processCorrectPassword() {
   command.innerHTML = "";
   textarea.value = "";
   pwd = false;
-  pw = false;
+  isPasswordInputActive = false;
   liner.classList.remove("password");
 }
 
@@ -81,7 +81,7 @@ function processIncorrectPassword() {
   addLine("Wrong password", "error", 0);
   command.innerHTML = "";
   textarea.value = "";
-  pw = false;
+  isPasswordInputActive = false;
   liner.classList.remove("password");
 }
 
@@ -217,7 +217,7 @@ function commander(cmd) {
       break;
     case "secret":
       liner.classList.add("password");
-      pw = true;
+      isPasswordInputActive = true;
       break;
     case "projects":
       loopLines(projects, "color2 margin", 80);
