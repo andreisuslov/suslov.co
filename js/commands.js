@@ -1,6 +1,6 @@
-var password = "terminal123";
-var linkedin = "https://www.linkedin.com/in/andrei-suslov/";
-var github = "https://github.com/andreisuslov/";
+let password = "terminal123";
+let linkedin = "https://www.linkedin.com/in/andrei-suslov/";
+let github = "https://github.com/andreisuslov/";
 
 whois = [
   "<br>",

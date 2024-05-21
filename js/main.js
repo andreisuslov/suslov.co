@@ -1,13 +1,13 @@
-var before = document.getElementById("before");
-var liner = document.getElementById("liner");
-var command = document.getElementById("typer"); 
-var textarea = document.getElementById("texter"); 
-var terminal = document.getElementById("terminal");
+let before = document.getElementById("before");
+let liner = document.getElementById("liner");
+let command = document.getElementById("typer"); 
+let textarea = document.getElementById("texter"); 
+let terminal = document.getElementById("terminal");
 
-var git = 0;
-var pw = false;
+let git = 0;
+let pw = false;
 let pwd = false;
-var commands = [];
+let commands = [];
 
 setTimeout(function() {
   loopLines(banner, "", 80);
@@ -118,8 +118,8 @@ function commander(cmd) {
       addLine("<br>", "command", 80 * commands.length + 50);
       break;
     case "email":
-      var subject = "Message from your website";  // Optional subject line
-      var body = "Hello Andrei,\n\nI visited your website and wanted to reach out.\n\n";
+      let subject = "Message from your website";
+      let body = "Hello Andrei,\n\nI visited your website and wanted to reach out.\n\n";
       window.location.href = "mailto:andrei.suslov.dev@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       break;
     case "clear":
@@ -153,7 +153,7 @@ function newTab(link) {
 }
 
 function addLine(text, style, time) {
-  var t = "";
+  let t = "";
   for (let i = 0; i < text.length; i++) {
     if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
       t += "&nbsp;&nbsp;";
@@ -163,7 +163,7 @@ function addLine(text, style, time) {
     }
   }
   setTimeout(function() {
-    var next = document.createElement("p");
+    let next = document.createElement("p");
     next.innerHTML = t;
     next.className = style;
 
@@ -180,15 +180,15 @@ function loopLines(name, style, time) {
 }
 
 document.addEventListener('click', function(event) {
-  var textarea = document.getElementById('texter');
-  var selection = window.getSelection();
+  let textarea = document.getElementById('texter');
+  let selection = window.getSelection();
   if (event.target.tagName !== 'A' && selection.type !== 'Range') {
     textarea.focus();
   }
 });
 
-var links = document.getElementsByTagName('a');
-for (var i = 0; i < links.length; i++) {
+let links = document.getElementsByTagName('a');
+for (let i = 0; i < links.length; i++) {
   links[i].addEventListener('click', function(event) {
     event.stopPropagation();
   });
