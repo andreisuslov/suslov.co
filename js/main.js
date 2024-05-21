@@ -188,8 +188,8 @@ document.addEventListener('click', function(event) {
 });
 
 let links = document.getElementsByTagName('a');
-for (let i = 0; i < links.length; i++) {
-  links[i].addEventListener('click', function(event) {
+for (let element of links) {
+  element.addEventListener('click', function(event) {
     event.stopPropagation();
   });
 }
