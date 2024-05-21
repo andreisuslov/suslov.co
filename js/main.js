@@ -45,10 +45,10 @@ function enterKey(e) {
 }
 
 function handlePasswordInput(e) {
-  let et = "*";
-  let w = textarea.value.length;
-  command.innerHTML = et.repeat(w);
+  // Replace the text with asterisks for password masking
+  command.innerHTML = "*".repeat(textarea.value.length);
 
+  // Check if the entered password matches the expected password
   if (textarea.value === password) {
     pwd = true;
   }
