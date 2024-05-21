@@ -29,51 +29,81 @@ command.innerHTML = textarea.value;
 function enterKey(e) {
   if (e.keyCode == 181) {
     document.location.reload(true);
+    return;
   }
+
   if (pw) {
-    let et = "*";
-    let w = textarea.value.length;
-    command.innerHTML = et.repeat(w);
-    if (textarea.value === password) {
-      pwd = true;
-    }
-    if (pwd && e.keyCode == 13) {
-      loopLines(secret, "color2 margin", 120);
-      command.innerHTML = "";
-      textarea.value = "";
-      pwd = false;
-      pw = false;
-      liner.classList.remove("password");
-    } else if (e.keyCode == 13) {
-      addLine("Wrong password", "error", 0);
-      command.innerHTML = "";
-      textarea.value = "";
-      pw = false;
-      liner.classList.remove("password");
-    }
+    handlePasswordInput(e);
   } else {
-    if (e.keyCode == 13) {
-      commands.push(command.innerHTML);
-      git = commands.length;
-      addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
-      commander(command.innerHTML.toLowerCase());
-      command.innerHTML = "";
-      textarea.value = "";
-    }
-    if (e.keyCode == 38 && git != 0) {
-      git -= 1;
-      textarea.value = commands[git];
-      command.innerHTML = textarea.value;
-    }
-    if (e.keyCode == 40 && git != commands.length) {
-      git += 1;
-      if (commands[git] === undefined) {
-        textarea.value = "";
-      } else {
-        textarea.value = commands[git];
-      }
-      command.innerHTML = textarea.value;
-    }
+    handleCommandInput(e);
+  }
+}
+
+function handlePasswordInput(e) {
+  let et = "*";
+  let w = textarea.value.length;
+  command.innerHTML = et.repeat(w);
+
+  if (textarea.value === password) {
+    pwd = true;
+  }
+
+  if (pwd && e.keyCode == 13) {
+    processCorrectPassword();
+  } else if (e.keyCode == 13) {
+    processIncorrectPassword();
+  }
+}
+
+function processCorrectPassword() {
+  loopLines(secret, "color2 margin", 120);
+  command.innerHTML = "";
+  textarea.value = "";
+  pwd = false;
+  pw = false;
+  liner.classList.remove("password");
+}
+
+function processIncorrectPassword() {
+  addLine("Wrong password", "error", 0);
+  command.innerHTML = "";
+  textarea.value = "";
+  pw = false;
+  liner.classList.remove("password");
+}
+
+function handleCommandInput(e) {
+  if (e.keyCode == 13) {
+    processEnterKeyPress();
+  } else if (e.keyCode == 38) {
+    handleUpArrowKeyPress();
+  } else if (e.keyCode == 40) {
+    handleDownArrowKeyPress();
+  }
+}
+
+function processEnterKeyPress() {
+  commands.push(command.innerHTML);
+  git = commands.length;
+  addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
+  commander(command.innerHTML.toLowerCase());
+  command.innerHTML = "";
+  textarea.value = "";
+}
+
+function handleUpArrowKeyPress() {
+  if (git != 0) {
+    git -= 1;
+    textarea.value = commands[git];
+    command.innerHTML = textarea.value;
+  }
+}
+
+function handleDownArrowKeyPress() {
+  if (git != commands.length) {
+    git += 1;
+    textarea.value = commands[git] !== undefined ? commands[git] : "";
+    command.innerHTML = textarea.value;
   }
 }
 
