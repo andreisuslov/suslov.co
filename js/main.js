@@ -12,7 +12,7 @@ let terminal = document.getElementById("terminal");
 
 let commandHistoryIndex = 0;
 let isPasswordInputActive = false;
-let pwd = false;
+let isCorrectPassword = false;
 let commands = [];
 let tabPressCount = 0;
 let lastCommand = "";
@@ -58,10 +58,10 @@ function handlePasswordInput(e) {
 
   // Check if the entered password matches the expected password
   if (textarea.value === password) {
-    pwd = true;
+    isCorrectPassword = true;
   }
 
-  if (pwd && e.keyCode == KEY_CODE_ENTER) {
+  if (isCorrectPassword && e.keyCode == KEY_CODE_ENTER) {
     processCorrectPassword();
   } else if (e.keyCode == KEY_CODE_ENTER) {
     processIncorrectPassword();
@@ -72,7 +72,7 @@ function processCorrectPassword() {
   loopLines(secret, "color2 margin", 120);
   command.innerHTML = "";
   textarea.value = "";
-  pwd = false;
+  isCorrectPassword = false;
   isPasswordInputActive = false;
   liner.classList.remove("password");
 }
