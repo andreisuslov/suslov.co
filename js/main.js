@@ -2,6 +2,7 @@ let KEY_CODE_RELOAD = 181;
 let KEY_CODE_ENTER = 13;
 let KEY_CODE_UP_ARROW = 38;
 let KEY_CODE_DOWN_ARROW = 40;
+let KEY_CODE_TAB = 9;
 
 let before = document.getElementById("before");
 let liner = document.getElementById("liner");
@@ -19,7 +20,7 @@ setTimeout(function() {
   textarea.focus();
 }, 100);
 
-window.addEventListener("keyup", enterKey);
+window.addEventListener("keydown", enterKey);  // Switch from 'keyup' to 'keydown'
 
 console.log(
   "%cYou hacked my password!😠",
@@ -84,6 +85,21 @@ function handleCommandInput(e) {
     handleUpArrowKeyPress();
   } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
     handleDownArrowKeyPress();
+  } else if (e.keyCode == KEY_CODE_TAB) {
+    e.preventDefault();  // Prevent the default tab behavior (focus navigation)
+    autocompleteCommand();
+  }
+}
+
+function autocompleteCommand() {
+  const currentInput = textarea.value.trim().toLowerCase();
+  const foundCommands = commandSuggestions.filter(cmd => cmd.startsWith(currentInput));
+  
+  if (foundCommands.length === 1) {  // If exactly one command matches, autocomplete it
+    textarea.value = foundCommands[0];
+    command.innerHTML = foundCommands[0];
+  } else if (foundCommands.length > 1) {  // If multiple commands match, display a list of commands
+    addLine("Available commands: " + foundCommands.join(", "), "color2", 0);
   }
 }
 
@@ -111,6 +127,12 @@ function handleDownArrowKeyPress() {
     command.innerHTML = textarea.value;
   }
 }
+
+const commandSuggestions = [
+  "help", "whois", "whoami", "sudo", "social", "secret", 
+  "projects", "exploit", "password", "history", "email", 
+  "clear", "banner", "linkedin", "github"
+];
 
 function commander(cmd) {
   switch (cmd.toLowerCase()) {
