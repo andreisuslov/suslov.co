@@ -33,6 +33,7 @@ console.log("%cPassword: '" + password + "' - I wonder what it does?🤔", "colo
 // init
 textarea.value = "";
 command.innerHTML = textarea.value;
+let isEditing = false;
 
 function enterKey(e) {
   if (e.keyCode == KEY_CODE_RELOAD) {
@@ -44,6 +45,10 @@ function enterKey(e) {
     handlePasswordInput(e);
   } else {
     handleCommandInput(e);
+  }
+
+  if (isEditing) {
+    moveCursorToEnd();
   }
 }
 
@@ -83,6 +88,7 @@ function processIncorrectPassword() {
 function handleCommandInput(e) {
   if (e.keyCode == KEY_CODE_ENTER) {
     processEnterKeyPress();
+    isEditing = false;
   } else if (e.keyCode == KEY_CODE_UP_ARROW) {
     handleUpArrowKeyPress();
   } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
@@ -90,6 +96,11 @@ function handleCommandInput(e) {
   } else if (e.keyCode == KEY_CODE_TAB) {
     e.preventDefault();  // Prevent the default tab behavior (focus navigation)
     autocompleteCommand();
+  } else {
+    if (!isEditing) {
+      isEditing = true;
+      moveCursorToEnd();
+    }
   }
 }
 
@@ -156,6 +167,8 @@ function handleUpArrowKeyPress() {
     git -= 1;
     textarea.value = commands[git];
     command.innerHTML = textarea.value;
+    isEditing = true;
+    moveCursorToEnd();
   }
 }
 
@@ -164,7 +177,14 @@ function handleDownArrowKeyPress() {
     git += 1;
     textarea.value = commands[git] !== undefined ? commands[git] : "";
     command.innerHTML = textarea.value;
+    isEditing = true;
+    moveCursorToEnd();
   }
+}
+
+function moveCursorToEnd() {
+  textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+  textarea.focus();
 }
 
 const commandSuggestions = [
