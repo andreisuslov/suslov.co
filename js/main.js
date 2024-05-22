@@ -2,7 +2,6 @@ let KEY_CODE_RELOAD = 181;
 let KEY_CODE_ENTER = 13;
 let KEY_CODE_UP_ARROW = 38;
 let KEY_CODE_DOWN_ARROW = 40;
-let KEY_CODE_TAB = 9;
 
 let before = document.getElementById("before");
 let liner = document.getElementById("liner");
@@ -10,20 +9,17 @@ let command = document.getElementById("typer");
 let textarea = document.getElementById("texter"); 
 let terminal = document.getElementById("terminal");
 
-let commandHistoryIndex = 0;
+let git = 0;
 let pw = false;
-let isCorrectPassword = false;
+let pwd = false;
 let commands = [];
-let tabPressCount = 0;
-let lastCommand = "";
-let isEditing = false;
 
 setTimeout(function() {
   loopLines(banner, "", 80);
   textarea.focus();
-}, 100);
+}, 10);
 
-window.addEventListener("keydown", enterKey);  // Switch from 'keyup' to 'keydown'
+window.addEventListener("keyup", enterKey);
 
 console.log(
   "%cYou hacked my password!😠",
@@ -46,22 +42,18 @@ function enterKey(e) {
   } else {
     handleCommandInput(e);
   }
-
-  if (isEditing) {
-    moveCursorToEnd();
-  }
 }
 
 function handlePasswordInput(e) {
-  // Replace the text with asterisks for password masking
-  command.innerHTML = "*".repeat(textarea.value.length);
+  let et = "*";
+  let w = textarea.value.length;
+  command.innerHTML = et.repeat(w);
 
-  // Check if the entered password matches the expected password
   if (textarea.value === password) {
-    isCorrectPassword = true;
+    pwd = true;
   }
 
-  if (isCorrectPassword && e.keyCode == KEY_CODE_ENTER) {
+  if (pwd && e.keyCode == KEY_CODE_ENTER) {
     processCorrectPassword();
   } else if (e.keyCode == KEY_CODE_ENTER) {
     processIncorrectPassword();
@@ -72,7 +64,7 @@ function processCorrectPassword() {
   loopLines(secret, "color2 margin", 120);
   command.innerHTML = "";
   textarea.value = "";
-  isCorrectPassword = false;
+  pwd = false;
   pw = false;
   liner.classList.remove("password");
 }
@@ -88,74 +80,16 @@ function processIncorrectPassword() {
 function handleCommandInput(e) {
   if (e.keyCode == KEY_CODE_ENTER) {
     processEnterKeyPress();
-    isEditing = false;
   } else if (e.keyCode == KEY_CODE_UP_ARROW) {
     handleUpArrowKeyPress();
   } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
     handleDownArrowKeyPress();
-  } else if (e.keyCode == KEY_CODE_TAB) {
-    e.preventDefault();  // Prevent the default tab behavior (focus navigation)
-    autocompleteCommand();
-  } else {
-    if (!isEditing) {
-      isEditing = true;
-      moveCursorToEnd();
-    }
   }
-}
-
-function autocompleteCommand() {
-  const currentInput = textarea.value.trim().toLowerCase();
-
-  // Reset tabPressCount if the input has changed
-  if (currentInput !== lastCommand) {
-    tabPressCount = 0;
-  }
-
-  const foundCommands = commandSuggestions.filter(cmd => cmd.startsWith(currentInput));
-
-  if (foundCommands.length === 0) {  // If no commands match
-    clearAvailableCommandsLine();
-  } else if (foundCommands.length === 1) {  // If exactly one command matches
-    textarea.value = foundCommands[0];
-    command.innerHTML = foundCommands[0];
-    tabPressCount = 0;  // Reset tab press count when command is fully autocompleted
-    clearAvailableCommandsLine();  // Clear any existing "Available commands:" line
-  } else if (foundCommands.length > 1) {  // If multiple commands match
-    tabPressCount += 1;
-    const style = tabPressCount > 1 ? "color3" : "color2";  // Change style after the first Tab press
-    updateCommandLine("Available commands: " + foundCommands.join(", "), style);
-  }
-
-  lastCommand = currentInput;  // Update last command input
-}
-
-function clearAvailableCommandsLine() {
-  const existingLines = terminal.querySelectorAll("p");
-  if (existingLines.length > 0) {
-    const lastLine = existingLines[existingLines.length - 1];
-    if (lastLine.innerHTML.startsWith("Available commands:")) {
-      lastLine.remove();
-    }
-  }
-}
-
-function updateCommandLine(text, style) {
-  const existingLines = terminal.querySelectorAll("p");
-  if (existingLines.length > 0) {
-    const lastLine = existingLines[existingLines.length - 1];
-    if (lastLine.innerHTML.startsWith("Available commands:")) {
-      lastLine.className = style;
-      lastLine.innerHTML = text;
-      return;
-    }
-  }
-  addLine(text, style, 0);
 }
 
 function processEnterKeyPress() {
   commands.push(command.innerHTML);
-  commandHistoryIndex = commands.length;
+  git = commands.length;
   addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
   commander(command.innerHTML.toLowerCase());
   command.innerHTML = "";
@@ -163,35 +97,20 @@ function processEnterKeyPress() {
 }
 
 function handleUpArrowKeyPress() {
-  if (commandHistoryIndex != 0) {
-    commandHistoryIndex -= 1;
-    textarea.value = commands[commandHistoryIndex];
+  if (git != 0) {
+    git -= 1;
+    textarea.value = commands[git];
     command.innerHTML = textarea.value;
-    isEditing = true;
-    moveCursorToEnd();
   }
 }
 
 function handleDownArrowKeyPress() {
-  if (commandHistoryIndex != commands.length) {
-    commandHistoryIndex += 1;
-    textarea.value = commands[commandHistoryIndex] !== undefined ? commands[commandHistoryIndex] : "";
+  if (git != commands.length) {
+    git += 1;
+    textarea.value = commands[git] !== undefined ? commands[git] : "";
     command.innerHTML = textarea.value;
-    isEditing = true;
-    moveCursorToEnd();
   }
 }
-
-function moveCursorToEnd() {
-  textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
-  textarea.focus();
-}
-
-const commandSuggestions = [
-  "help", "whois", "whoami", "sudo", "social", "secret", 
-  "projects", "exploit", "password", "history", "email", 
-  "clear", "banner", "linkedin", "github"
-];
 
 function commander(cmd) {
   switch (cmd.toLowerCase()) {
