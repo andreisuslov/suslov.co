@@ -9,9 +9,8 @@ Check out the live version of the website at [suslov.co](https://suslov.co).
 ## Features
 
 - Interactive terminal-like interface
-- Command-based navigation and information retrieval
+- 'Smart' history navigation when pressing arrow-up and arrow-down
 - Easter egg hidden within the code
-- Responsive design for optimal viewing on various devices
 
 ## Commands
 
