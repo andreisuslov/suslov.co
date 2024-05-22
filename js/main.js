@@ -2,6 +2,7 @@ let KEY_CODE_RELOAD = 181;
 let KEY_CODE_ENTER = 13;
 let KEY_CODE_UP_ARROW = 38;
 let KEY_CODE_DOWN_ARROW = 40;
+let KEY_CODE_TAB = 9;
 
 let before = document.getElementById("before");
 let liner = document.getElementById("liner");
@@ -97,18 +98,31 @@ function processEnterKeyPress() {
 }
 
 function handleUpArrowKeyPress() {
-  if (git != 0) {
+  if (git > 0) {
     git -= 1;
-    textarea.value = commands[git];
-    command.innerHTML = textarea.value;
+    while (git > 0 && commands[git].trim() === '') {
+      git -= 1;
+    }
+    if (commands[git].trim() !== '') {
+      textarea.value = commands[git];
+      command.innerHTML = textarea.value;
+    }
   }
 }
 
 function handleDownArrowKeyPress() {
-  if (git != commands.length) {
+  if (git < commands.length - 1) {
     git += 1;
-    textarea.value = commands[git] !== undefined ? commands[git] : "";
-    command.innerHTML = textarea.value;
+    while (git < commands.length - 1 && commands[git].trim() === '') {
+      git += 1;
+    }
+    if (commands[git].trim() !== '') {
+      textarea.value = commands[git];
+      command.innerHTML = textarea.value;
+    } else {
+      textarea.value = '';
+      command.innerHTML = '';
+    }
   }
 }
 
