@@ -10,9 +10,9 @@ let command = document.getElementById("typer");
 let textarea = document.getElementById("texter"); 
 let terminal = document.getElementById("terminal");
 
-let git = 0;
-let pw = false;
-let pwd = false;
+let commandIndex = 0;
+let passwordModeEnabled = false;
+let isPasswordCorrect = false;
 let commands = [];
 
 setTimeout(function() {
@@ -38,7 +38,7 @@ function enterKey(e) {
     return;
   }
 
-  if (pw) {
+  if (passwordModeEnabled) {
     handlePasswordInput(e);
   } else {
     handleCommandInput(e);
@@ -51,10 +51,10 @@ function handlePasswordInput(e) {
   command.innerHTML = et.repeat(w);
 
   if (textarea.value === password) {
-    pwd = true;
+    isPasswordCorrect = true;
   }
 
-  if (pwd && e.keyCode == KEY_CODE_ENTER) {
+  if (isPasswordCorrect && e.keyCode == KEY_CODE_ENTER) {
     processCorrectPassword();
   } else if (e.keyCode == KEY_CODE_ENTER) {
     processIncorrectPassword();
@@ -65,8 +65,8 @@ function processCorrectPassword() {
   loopLines(secret, "color2 margin", 120);
   command.innerHTML = "";
   textarea.value = "";
-  pwd = false;
-  pw = false;
+  isPasswordCorrect = false;
+  passwordModeEnabled = false;
   liner.classList.remove("password");
 }
 
@@ -74,7 +74,7 @@ function processIncorrectPassword() {
   addLine("Wrong password", "error", 0);
   command.innerHTML = "";
   textarea.value = "";
-  pw = false;
+  passwordModeEnabled = false;
   liner.classList.remove("password");
 }
 
@@ -90,7 +90,7 @@ function handleCommandInput(e) {
 
 function processEnterKeyPress() {
   commands.push(command.innerHTML);
-  git = commands.length;
+  commandIndex = commands.length;
   addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
   commander(command.innerHTML.toLowerCase());
   command.innerHTML = "";
@@ -98,26 +98,26 @@ function processEnterKeyPress() {
 }
 
 function handleUpArrowKeyPress() {
-  if (git > 0) {
-    git -= 1;
-    while (git > 0 && commands[git].trim() === '') {
-      git -= 1;
+  if (commandIndex > 0) {
+    commandIndex -= 1;
+    while (commandIndex > 0 && commands[commandIndex].trim() === '') {
+      commandIndex -= 1;
     }
-    if (commands[git].trim() !== '') {
-      textarea.value = commands[git];
+    if (commands[commandIndex].trim() !== '') {
+      textarea.value = commands[commandIndex];
       command.innerHTML = textarea.value;
     }
   }
 }
 
 function handleDownArrowKeyPress() {
-  if (git < commands.length - 1) {
-    git += 1;
-    while (git < commands.length - 1 && commands[git].trim() === '') {
-      git += 1;
+  if (commandIndex < commands.length - 1) {
+    commandIndex += 1;
+    while (commandIndex < commands.length - 1 && commands[commandIndex].trim() === '') {
+      commandIndex += 1;
     }
-    if (commands[git].trim() !== '') {
-      textarea.value = commands[git];
+    if (commands[commandIndex].trim() !== '') {
+      textarea.value = commands[commandIndex];
       command.innerHTML = textarea.value;
     } else {
       textarea.value = '';
@@ -150,7 +150,7 @@ function commander(cmd) {
       break;
     case "secret":
       liner.classList.add("password");
-      pw = true;
+      passwordModeEnabled = true;
       break;
     case "projects":
       loopLines(projects, "color2 margin", 80);
