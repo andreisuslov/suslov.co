@@ -83,7 +83,8 @@ body {
     line-height: 1.3em;
     margin: 0;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
     letter-spacing: 0.05em;
     animation: typing 0.5s steps(30, end);
   }
