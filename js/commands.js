@@ -76,18 +76,8 @@ banner = [
   '<br>',
   '<span class="index">Andrei Suslov\'s  personal website, no rights reserved. </span>',
   '<br>',
-  '  ___            _          _   _____           _            ',
-  '  /  \\          | |        (_) /  ___|         | |           ',
-  '/ /_\\ \\_ __   __| |_ __ ___ _  \\ `--. _   _ ___| | _____   __',
-  '|  _  | \'_ \\ / _` | \'__/ _ \\ |  `--. \\ | | / __| |/ _ \\ \\ / /',
-  '| | | | | | | (_| | | |  __/ | /\\__/ / |_| \\__ \\ | (_) \\ V / ',
-  '\\_| |_/_| |_|\\__,_|_|  \\___|_| \\____/ \\__,_|___/_|\\___/ \\_/  ',
-  '                                                             ',
-  '                                                             ',
-  '<span class="color2">Welcome to my highly interactive web terminal.</span>',
+  '<br>',
+  '<span class="color2">Welcome to my interactive web terminal.</span>',
   '<span class="color2">For a list of available commands, type</span> <span class="command">"help"</span><span class="color2">.</span>',
   '<br>'
-];
-banner = [
-  '<br>',
 ];
