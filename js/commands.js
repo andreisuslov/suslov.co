@@ -5,17 +5,9 @@ let github = "https://github.com/andreisuslov/";
 whois = [
   "<br>",
   "Hey, I'm Andrei!👋",
-  "I'm an SDET with " + getYearsOfExperience() + " years of experience in test automation, CI/CD, and cloud migration.",
-  "Proficient in Java, JavaScript, and Python, I have a proven track record of reducing manual testing efforts",
-  "and ensuring high-quality software delivery. I'm also an effective communicator and mentor.",
-  "After completing coursework towards a Bachelor's Degree in Business Economics, I transitioned into the world",
-  "of software development and found my passion in test automation and quality assurance.",
-  "Throughout my career, I've worked with various companies, including Avid Technology and Liberty Mutual,",
-  "where I've contributed to developing efficient testing frameworks, implementing CI/CD pipelines,",
-  "and facilitating seamless cloud migrations.",
-  "In addition to my professional work, I've also enjoyed sharing my knowledge and experience as a mentor",
-  "and instructor at DevMountain and DevX School, helping aspiring developers gain valuable skills.",
-  "I'm constantly exploring new technologies and finding ways to improve software quality and development processes.",
+  "I'm a software engineer and I work with test automation, CI/CD, and cloud migration.",
+  "Proficient in Java, JavaScript, and Python, I work on reducing manual testing efforts",
+  "and ensuring high-quality software delivery.",
   "<br>"
 ];
 
@@ -96,11 +88,6 @@ banner = [
   '<span class="color2">For a list of available commands, type</span> <span class="command">"help"</span><span class="color2">.</span>',
   '<br>'
 ];
-
-// Function to calculate years of experience
-function getYearsOfExperience() {
-  const startYear = 2018;
-  const currentYear = new Date().getFullYear();
-  const yearsOfExperience = currentYear - startYear;
-  return yearsOfExperience;
-}
+banner = [
+  '<br>',
+];
