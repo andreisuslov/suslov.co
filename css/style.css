@@ -5,13 +5,13 @@ body {
     margin: 0;
     padding: 15px 20px;
     min-height: 99%;
-    width: 96%;
-    min-width: 250px;
+    width: 97%;
+    min-width: 150px;
     color: #E5DADA;
     background: #002642;
     font-family: cursor, monospace;
     overflow-x: hidden;
-  }
+}
   ::selection {
     color: #002642;
     background-color: #E5DADA;
@@ -86,14 +86,22 @@ body {
     white-space: normal;
     word-wrap: break-word;
     letter-spacing: 0.05em;
-    animation: typing 0.5s steps(30, end);
-  }
+}
+
+.animated-text {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 0.15em solid #E5DADA;
+    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+}
+
   .no-animation {
     animation: typing 0 steps(30, end);
   }
   .margin {
     margin-left: 20px;
   }
+
   @keyframes typing {
     from {
       width: 0;
@@ -102,6 +110,16 @@ body {
       width: 100%;
     }
   }
+
+  @keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #E5DADA;
+    }
+  }
+
   .index {
     color: #DCDCCC;
   }
