@@ -7,17 +7,34 @@ let KEY_CODE_TAB = 9;
 let before = document.getElementById("before");
 let liner = document.getElementById("liner");
 let command = document.getElementById("typer"); 
-let textarea = document.getElementById("texter"); 
+let textArea = document.getElementById("texter"); 
 let terminal = document.getElementById("terminal");
 
+let lastCommand = "";
 let commandIndex = 0;
 let passwordModeEnabled = false;
 let isPasswordCorrect = false;
 let commands = [];
+let commandSuggestions = [
+  "help",
+  "whois",
+  "whoami",
+  "social",
+  "secret",
+  "projects",
+  "password",
+  "history",
+  "email",
+  "clear",
+  "linkedin",
+  "github"
+];
+
+let tabPressCount = 0;
 
 setTimeout(function() {
   loopLines(banner, "", 80);
-  textarea.focus();
+  textArea.focus();
 }, 10);
 
 window.addEventListener("keyup", enterKey);
@@ -29,15 +46,14 @@ console.log(
 console.log("%cPassword: '" + password + "' - I wonder what it does?🤔", "color: grey");
 
 // init
-textarea.value = "";
-command.innerHTML = textarea.value;
+textArea.value = "";
+command.innerHTML = textArea.value;
 
 function enterKey(e) {
   if (e.keyCode == KEY_CODE_RELOAD) {
     document.location.reload(true);
     return;
   }
-
   if (passwordModeEnabled) {
     handlePasswordInput(e);
   } else {
@@ -47,10 +63,10 @@ function enterKey(e) {
 
 function handlePasswordInput(e) {
   let et = "*";
-  let w = textarea.value.length;
+  let w = textArea.value.length;
   command.innerHTML = et.repeat(w);
 
-  if (textarea.value === password) {
+  if (textArea.value === password) {
     isPasswordCorrect = true;
   }
 
@@ -64,7 +80,7 @@ function handlePasswordInput(e) {
 function processCorrectPassword() {
   loopLines(secret, "color2 margin", 120);
   command.innerHTML = "";
-  textarea.value = "";
+  textArea.value = "";
   isPasswordCorrect = false;
   passwordModeEnabled = false;
   liner.classList.remove("password");
@@ -73,7 +89,7 @@ function processCorrectPassword() {
 function processIncorrectPassword() {
   addLine("Wrong password", "error", 0);
   command.innerHTML = "";
-  textarea.value = "";
+  textArea.value = "";
   passwordModeEnabled = false;
   liner.classList.remove("password");
 }
@@ -85,6 +101,8 @@ function handleCommandInput(e) {
     handleUpArrowKeyPress();
   } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
     handleDownArrowKeyPress();
+  } else if (e.keyCode == KEY_CODE_TAB) {
+    handleTabKeyPress(e);
   }
 }
 
@@ -94,7 +112,7 @@ function processEnterKeyPress() {
   addLine("visitor@suslov.co:~$ " + command.innerHTML, "no-animation", 0);
   commander(command.innerHTML.toLowerCase());
   command.innerHTML = "";
-  textarea.value = "";
+  textArea.value = "";
 }
 
 function handleUpArrowKeyPress() {
@@ -104,8 +122,8 @@ function handleUpArrowKeyPress() {
       commandIndex -= 1;
     }
     if (commands[commandIndex].trim() !== '') {
-      textarea.value = commands[commandIndex];
-      command.innerHTML = textarea.value;
+      textArea.value = commands[commandIndex];
+      command.innerHTML = textArea.value;
     }
   }
 }
@@ -117,14 +135,72 @@ function handleDownArrowKeyPress() {
       commandIndex += 1;
     }
     if (commands[commandIndex].trim() !== '') {
-      textarea.value = commands[commandIndex];
-      command.innerHTML = textarea.value;
+      textArea.value = commands[commandIndex];
+      command.innerHTML = textArea.value;
     } else {
-      textarea.value = '';
+      textArea.value = '';
       command.innerHTML = '';
     }
   }
 }
+
+function clearAvailableCommandsLine() {
+  const existingLines = terminal.querySelectorAll("p");
+  if (existingLines.length > 0) {
+    const lastLine = existingLines[existingLines.length - 1];
+    if (lastLine.innerHTML.startsWith("Available commands:")) {
+      lastLine.remove();
+    }
+  }
+}
+
+function updateCommandLine(text, style) {
+  const existingLines = terminal.querySelectorAll("p");
+  if (existingLines.length > 0) {
+    const lastLine = existingLines[existingLines.length - 1];
+    if (lastLine.innerHTML.startsWith("Available commands:")) {
+      lastLine.className = style;
+      lastLine.innerHTML = text;
+      return;
+    }
+  }
+  addLine(text, style, 0);
+}
+
+function autocompleteCommand() {
+  const currentInput = textArea.value.trim().toLowerCase();
+
+  // Reset tabPressCount if the input has changed
+  if (currentInput !== lastCommand) {
+    tabPressCount = 0;
+  }
+
+  const foundCommands = commandSuggestions.filter(cmd => cmd.startsWith(currentInput));
+  if (foundCommands.length === 0) {  // If no commands match
+    clearAvailableCommandsLine();
+  } else if (foundCommands.length === 1) {  // If exactly one command matches
+    textArea.value = foundCommands[0];
+    command.innerHTML = foundCommands[0];
+    tabPressCount = 0;  // Reset tab press count when command is fully autocompleted
+    clearAvailableCommandsLine();  // Clear any existing "Available commands:" line
+  } else if (foundCommands.length > 1) {  // If multiple commands match
+    tabPressCount += 1;
+    const style = tabPressCount > 1 ? "color3" : "color2";  // Change style after the first Tab press
+    updateCommandLine("Available commands: " + foundCommands.join(", "), style);
+  }
+
+  lastCommand = currentInput;  // Update last command input
+}
+
+function handleTabKeyPress(e) {
+    if (e.keyCode === KEY_CODE_TAB) {
+        e.preventDefault(); // Prevent default tab behavior
+        autocompleteCommand();
+    }
+}
+
+// Event listener for keypress
+textArea.addEventListener('keydown', handleTabKeyPress);
 
 function commander(cmd) {
   switch (cmd.toLowerCase()) {
@@ -178,7 +254,7 @@ function commander(cmd) {
       }, 1);
       break;
     case "banner":
-      loopLines(banner, "", 80);
+      loopLines(banner, "no-gap", 0);
       break;
     // socials
     case "linkedin":
