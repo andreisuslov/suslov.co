@@ -11,6 +11,7 @@ Check out the live version of the website at [suslov.co](https://suslov.co).
 - Interactive terminal-like interface
 - 'Smart' history navigation when pressing arrow-up and arrow-down
 - Easter egg hidden within the code
+- Communication via `email` command
 
 ## Commands
 
