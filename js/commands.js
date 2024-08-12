@@ -1,6 +1,7 @@
 let password = "terminal123";
 let linkedin = "https://www.linkedin.com/in/andrei-suslov/";
 let github = "https://github.com/andreisuslov/";
+let cpuSimulator = "https://andreisuslov.github.io/cpu-simulator/";
 
 whois = [
   "<br>",
@@ -53,7 +54,8 @@ exploit = [
 
 projects = [
   "<br>",
-  "Still curating... most projects are offline, or on <a href='" + github + "' target='_blank'>GitHub</a>, or confidential.",
+  'cpu-simulator <a href="' + cpuSimulator + '" target="_blank">github/cpu-simulator' + "</a>",
+  "The rest are still being curated... most projects are offline, or on <a href='" + github + "' target='_blank'>GitHub</a>, or confidential.",
   "<br>"
 ];
 
