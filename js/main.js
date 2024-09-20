@@ -212,9 +212,11 @@ function commander(cmd) {
       break;
     case "":
       break;
-    case "whoami":
-      loopLines(whoami, "color2 margin", 80);
-      break;
+      case "whoami": {
+        const randomHaiku = getRandomHaiku(whoami);
+        loopLines(randomHaiku, "color2 margin", 80);
+        break;
+      }
     case "sudo":
       addLine("Oh no, you're not admin...", "color2", 80);
       setTimeout(function() {
@@ -317,4 +319,22 @@ for (let element of links) {
   element.addEventListener('click', function(event) {
     event.stopPropagation();
   });
+}
+
+function getRandomHaiku(whoami) {
+  const randomIndex = Math.floor(Math.random() * whoami.length);
+  const haiku = whoami[randomIndex];
+
+  let lines = haiku.split('\n');
+
+  const lastLineIndex = lines.length - 1;
+  lines[lastLineIndex] = lines[lastLineIndex].replace(
+    /who am I$/i,
+    '<span class="command">who am I</span>'
+  );
+
+  lines.unshift('<br>');
+  lines.push('<br>');
+
+  return lines;
 }

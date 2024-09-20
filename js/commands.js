@@ -1,6 +1,7 @@
 let password = "terminal123";
 let linkedin = "https://www.linkedin.com/in/andrei-suslov/";
 let github = "https://github.com/andreisuslov/";
+
 let cpuSimulator = "https://andreisuslov.github.io/cpu-simulator/";
 
 whois = [
@@ -13,24 +14,125 @@ whois = [
 ];
 
 whoami = [
-  "<br>",
-  "Who am I? It's a question that haunts us all, isn't it?",
-  "It's not some leisurely journey of self-discovery", 
-  "It's a constant battle, a relentless struggle to find meaning in the chaos of existence.",
-  "Every day, we're faced with the harsh realities of life, and it's in those moments of confrontation",
-  "that we're forced to dig deep and carve out our own sense of purpose.",
-  "There's no single 'aha!' moment that defines us. No, our identity is shaped by the scars we bear from our",
-  "experiences, the endless chatter of our thoughts, and the weight of the choices we make.",
-  "We're not some static, unchanging being. We're a work in progress, constantly evolving and adapting to",
-  "the curveballs life throws our way. Our choices, our passions, our fears - they all weave together to create",
-  "the complex tapestry of who we are.",
-  "In the grand scheme of things, we're all just trying to make sense of the madness, to find our place",
-  "in the dissonant symphony of life. We're the creators of our own destiny, but at the same time, we're at the mercy", 
-  "of the unpredictable tides of fate.",
-  "So, maybe the key is to embrace the chaos, to accept that the search for self-discovery is a lifelong journey",
-  "filled with both triumph and tribulation. It's through this constant seeking and struggle that we slowly",
-  "unravel the mystery of who we truly are.",
-  "<br>"
+  `Cherry blossoms fall
+Pink petals dance on the breeze
+Spring who am I`,
+
+  `Moonlight on water
+Silver ripples cross the lake
+Night who am I`,
+
+  `Mountain peaks rise high
+Clouds embrace their rocky crowns
+Earth who am I`,
+
+  `Autumn leaves crunch soft
+Under my wandering feet
+Path who am I`,
+
+  `Starlight fills the sky
+Ancient stories in the dark
+Space who am I`,
+
+  `Ocean waves crash loud
+Salty spray upon my face
+Sea who am I`,
+
+  `Fireflies glow bright
+Tiny lanterns in the grass
+Light who am I`,
+
+  `Snow covers the ground
+Silence settles all around
+White who am I`,
+
+  `Sunflowers reach tall
+Following the sun's journey
+Growth who am I`,
+
+  `Misty morning fog
+Veils the world in secrecy
+Haze who am I`,
+
+  `River flows onward
+Carving through rock and soil
+Stream who am I`,
+
+  `City lights twinkle
+Concrete jungle never sleeps
+Urban who am I`,
+
+  `Desert sands stretch far
+Endless dunes shift with the wind
+Dust who am I`,
+
+  `Forest stands silent
+Ancient trees whisper secrets
+Wood who am I`,
+
+  `Raindrops on window
+Patterns forming, flowing down
+Storm who am I`,
+
+  `Campfire embers glow
+Stories shared under the stars
+Flame who am I`,
+
+  `Butterfly emerges
+Wings unfurl in morning sun
+Flight who am I`,
+
+  `Thunder rolls distant
+Lightning splits the darkened sky
+Spark who am I`,
+
+  `Sunrise paints the sky
+New day brings fresh beginnings
+Dawn who am I`,
+
+  `Autumn leaf drifts down
+Golden in the fading light
+Time who am I`,
+
+  `Mirror shows a face
+Familiar yet strange to me
+Truly who am I`,
+
+  `Leaves fall seasons change
+As years pass I transform too
+Still who am I`,
+
+  `In crowded spaces
+Surrounded yet feeling lost
+Quiet who am I`,
+
+  `Memories fade fast
+Present moments slip away
+Seeking who am I`,
+
+  `Dreams reveal secrets
+Unconscious thoughts take new forms
+Sleeping who am I`,
+
+  `Roles I play each day
+Son friend worker dreamer more
+Core who am I`,
+
+  `Nature's vastness calls
+My place in it all unclear
+Small who am I`,
+
+  `Time marches onward
+Past and future intertwine
+Caught who am I`,
+
+  `Choices shape my path
+Each decision changes me
+Shifting who am I`,
+
+  `In life's ebb and flow
+Constant amid the changes
+Ever who am I`
 ];
 
 social = [
