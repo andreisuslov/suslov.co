@@ -40,6 +40,12 @@ setTimeout(function() {
 window.addEventListener("keyup", enterKey);
 textArea.addEventListener('keydown', handleTabKeyPress); // Ensure that the Tab key is handled only in keydown event
 
+document.addEventListener('keydown', function(event) {
+  if (document.activeElement !== textArea) {
+    textArea.focus();
+  }
+});
+
 console.log(
   "%cYou hacked my password!😠",
   "color: #04ff00; font-weight: bold; font-size: 24px;"
@@ -48,7 +54,8 @@ console.log("%cPassword: '" + password + "' - I wonder what it does?🤔", "colo
 
 // init
 textArea.value = "";
-command.innerHTML = textArea.value;
+command.innerHTML = "";
+document.getElementById("prompt").innerText = "visitor@suslov.co:~$";
 
 function enterKey(e) {
   if (e.keyCode == KEY_CODE_RELOAD) {
@@ -85,6 +92,7 @@ function processCorrectPassword() {
   isPasswordCorrect = false;
   passwordModeEnabled = false;
   liner.classList.remove("password");
+  document.getElementById("prompt").innerText = "visitor@suslov.co:~$";
 }
 
 function processIncorrectPassword() {
@@ -93,6 +101,7 @@ function processIncorrectPassword() {
   textArea.value = "";
   passwordModeEnabled = false;
   liner.classList.remove("password");
+  document.getElementById("prompt").innerText = "visitor@suslov.co:~$";
 }
 
 function handleCommandInput(e) {
@@ -170,7 +179,7 @@ function updateCommandLine(text, style) {
       return;
     }
   }
-  addLine(text, style, 0);
+  addLineAfter(text, style, 0);
 }
 
 function autocompleteCommand() {
@@ -198,13 +207,6 @@ function autocompleteCommand() {
   lastCommand = currentInput;  // Update last command input
 }
 
-function handleTabKeyPress(e) {
-    if (e.keyCode === KEY_CODE_TAB) {
-        e.preventDefault(); // Prevent default tab behavior
-        autocompleteCommand();
-    }
-}
-
 // Event listener for keypress
 textArea.addEventListener('keydown', handleTabKeyPress);
 
@@ -218,11 +220,11 @@ function commander(cmd) {
       break;
     case "":
       break;
-      case "whoami": {
-        const randomHaiku = getRandomHaiku(whoami);
-        loopLines(randomHaiku, "color2 margin", 80);
-        break;
-      }
+    case "whoami": {
+      const randomHaiku = getRandomHaiku(whoami);
+      loopLines(randomHaiku, "color2 margin", 80);
+      break;
+    }
     case "sudo":
       addLine("Oh no, you're not admin...", "color2", 80);
       setTimeout(function() {
@@ -235,6 +237,7 @@ function commander(cmd) {
     case "secret":
       liner.classList.add("password");
       passwordModeEnabled = true;
+      document.getElementById("prompt").innerText = "Password:";
       break;
     case "projects":
       loopLines(projects, "color2 margin", 80);
@@ -301,6 +304,27 @@ function addLine(text, style, time) {
     next.className = style;
 
     before.parentNode.insertBefore(next, before);
+
+    window.scrollTo(0, document.body.offsetHeight);
+  }, time);
+}
+
+function addLineAfter(text, style, time) {
+  let t = "";
+  for (let i = 0; i < text.length; i++) {
+    if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
+      t += "&nbsp;&nbsp;";
+      i++;
+    } else {
+      t += text.charAt(i);
+    }
+  }
+  setTimeout(function() {
+    let next = document.createElement("p");
+    next.innerHTML = t;
+    next.className = style;
+
+    before.parentNode.insertBefore(next, before.nextSibling);
 
     window.scrollTo(0, document.body.offsetHeight);
   }, time);
