@@ -38,6 +38,7 @@ setTimeout(function() {
 }, 10);
 
 window.addEventListener("keyup", enterKey);
+textArea.addEventListener('keydown', handleTabKeyPress); // Ensure that the Tab key is handled only in keydown event
 
 console.log(
   "%cYou hacked my password!😠",
@@ -101,8 +102,13 @@ function handleCommandInput(e) {
     handleUpArrowKeyPress();
   } else if (e.keyCode == KEY_CODE_DOWN_ARROW) {
     handleDownArrowKeyPress();
-  } else if (e.keyCode == KEY_CODE_TAB) {
-    handleTabKeyPress(e);
+  }
+}
+
+function handleTabKeyPress(e) {
+  if (e.keyCode === KEY_CODE_TAB) {
+    e.preventDefault(); // Prevent default tab behavior
+    autocompleteCommand();
   }
 }
 
