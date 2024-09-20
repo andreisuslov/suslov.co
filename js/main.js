@@ -160,26 +160,20 @@ function handleDownArrowKeyPress() {
 }
 
 function clearAvailableCommandsLine() {
-  const existingLines = terminal.querySelectorAll("p");
-  if (existingLines.length > 0) {
-    const lastLine = existingLines[existingLines.length - 1];
-    if (lastLine.innerHTML.startsWith("Available commands:")) {
-      lastLine.remove();
-    }
+  const existingLine = document.querySelector('.available-commands');
+  if (existingLine) {
+    existingLine.remove();
   }
 }
 
 function updateCommandLine(text, style) {
-  const existingLines = terminal.querySelectorAll("p");
-  if (existingLines.length > 0) {
-    const lastLine = existingLines[existingLines.length - 1];
-    if (lastLine.innerHTML.startsWith("Available commands:")) {
-      lastLine.className = style;
-      lastLine.innerHTML = text;
-      return;
-    }
+  let existingLine = document.querySelector('.available-commands');
+  if (existingLine) {
+    existingLine.className = `${style} available-commands`;
+    existingLine.innerHTML = text;
+  } else {
+    addLineOnTabAfterLiner(text, style, 0);
   }
-  addLineAfter(text, style, 0);
 }
 
 function autocompleteCommand() {
@@ -206,6 +200,12 @@ function autocompleteCommand() {
 
   lastCommand = currentInput;  // Update last command input
 }
+
+textArea.addEventListener('input', function(e) {
+  if (e.inputType !== 'insertText' || e.data !== null) {
+    clearAvailableCommandsLine();
+  }
+});
 
 // Event listener for keypress
 textArea.addEventListener('keydown', handleTabKeyPress);
@@ -309,24 +309,44 @@ function addLine(text, style, time) {
   }, time);
 }
 
-function addLineAfter(text, style, time) {
-  let t = "";
+function addLineOnTabAfterLiner(text, style, time) {
+  let formattedText = "";
   for (let i = 0; i < text.length; i++) {
-    if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
-      t += "&nbsp;&nbsp;";
+    if (text.charAt(i) === " " && text.charAt(i + 1) === " ") {
+      formattedText += "&nbsp;&nbsp;";
       i++;
     } else {
-      t += text.charAt(i);
+      formattedText += text.charAt(i);
     }
   }
+
   setTimeout(function() {
-    let next = document.createElement("p");
-    next.innerHTML = t;
-    next.className = style;
+    // Check if a line with the class "available-commands" already exists
+    let existingLine = document.querySelector('.available-commands');
 
-    before.parentNode.insertBefore(next, before.nextSibling);
+    if (existingLine) {
+      // If it exists, replace the content and update the style
+      existingLine.innerHTML = formattedText;
+      existingLine.className = `${style} available-commands`;
+    } else {
+      // If it doesn't exist, create a new element
+      let newLine = document.createElement("p");
+      newLine.innerHTML = formattedText;
+      newLine.className = `${style} available-commands`; // Add a unique class to identify it
 
-    window.scrollTo(0, document.body.offsetHeight);
+      // Select the liner element
+      let liner = document.getElementById("liner");
+
+      // Insert the new line after the liner
+      if (liner.nextSibling) {
+        liner.parentNode.insertBefore(newLine, liner.nextSibling);
+      } else {
+        liner.parentNode.appendChild(newLine);
+      }
+    }
+
+    // Scroll to the bottom to ensure the new line is visible
+    window.scrollTo(0, document.body.scrollHeight);
   }, time);
 }
 
