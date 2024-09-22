@@ -16,6 +16,19 @@ body {
   overflow-x: hidden;
 }
 
+.prompt-style {
+  color: #E5DADA;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-size: 15pt;
+  display: inline-block;
+  line-height: 1.3em;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
 ::selection {
   color: #002642;
   background-color: #E5DADA;
@@ -40,6 +53,7 @@ b {
   display: inline-block;
   font-family: 'Share Tech Mono', monospace;
   font-size: 15pt;
+  transform: translateY(-5px);
 }
 
 /* Cursor Start */
@@ -77,7 +91,6 @@ b {
 
 #liner {
   line-height: 1.3em;
-  margin-top: -2px;
   animation: show 0.1s ease forwards;
   animation-delay: 0.6s;
   opacity: 0;
