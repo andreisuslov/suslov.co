@@ -9,7 +9,8 @@ const KEY_CODES = {
   A: 65,
   E: 69,
   LEFT_ARROW: 37,
-  RIGHT_ARROW: 39
+  RIGHT_ARROW: 39,
+  ENTER: 13
 };
 
 // Initialize the terminal emulator
@@ -26,6 +27,9 @@ function initialize() {
 
   cursor.style.left = '0px';
   cursor.style.marginLeft = `${promptWidth}px`;
+
+  // Store promptWidth as a global variable for later use
+  window.promptWidth = promptWidth;
 }
 
 // Remove newline characters from text
@@ -50,16 +54,31 @@ function moveIt(sourceElement, event) {
     [KEY_CODES.A]: () => moveCursorToStart(sourceElement),
     [KEY_CODES.E]: () => moveCursorToEnd(sourceElement),
     [KEY_CODES.LEFT_ARROW]: () => moveCursorLeft(sourceElement),
-    [KEY_CODES.RIGHT_ARROW]: () => moveCursorRight(sourceElement)
+    [KEY_CODES.RIGHT_ARROW]: () => moveCursorRight(sourceElement),
+    [KEY_CODES.ENTER]: () => handleEnterKey(sourceElement)  // Add Enter key handler
   };
 
   if (isCtrlPressed && actions[keyCode]) {
     actions[keyCode]();
     event.preventDefault();
-  } else if (!isCtrlPressed && (keyCode === KEY_CODES.LEFT_ARROW || keyCode === KEY_CODES.RIGHT_ARROW)) {
+  } else if (!isCtrlPressed && (keyCode === KEY_CODES.LEFT_ARROW || keyCode === KEY_CODES.RIGHT_ARROW || keyCode === KEY_CODES.ENTER)) {
     actions[keyCode]();
     event.preventDefault();
   }
+}
+
+// Add new function to handle Enter key press
+function handleEnterKey(sourceElement) {
+  // Reset cursor position to promptWidth
+  cursor.style.left = '0px';
+  cursor.style.marginLeft = `${window.promptWidth}px`;
+  
+  // Clear the input field
+  sourceElement.value = '';
+  $('typer').innerHTML = '';
+  
+  // Reset cursorIndex
+  cursorIndex = 0;
 }
 
 // Cursor movement functions
