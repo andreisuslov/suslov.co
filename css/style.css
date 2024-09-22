@@ -1,6 +1,7 @@
 html {
   -webkit-text-size-adjust: none;
 }
+
 body {
   margin: 0;
   padding: 15px 20px;
@@ -9,31 +10,45 @@ body {
   min-width: 150px;
   color: #E5DADA;
   background: #002642;
-  font-family: cursor, monospace;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-size: 15pt;
   overflow-x: hidden;
 }
+
 ::selection {
   color: #002642;
   background-color: #E5DADA;
 }
+
 ::-moz-selection {
   color: #002642;
   background-color: #E5DADA;
 }
+
 textarea {
   left: -1000px;
   position: absolute;
 }
+
 b {
   font-weight: bold;
   text-decoration: underline;
 }
+
+#typer {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 15pt;
+}
+
 /* Cursor Start */
 .cursor {
   font-size: 12px;
   color: #E5DADA;
   background-color: #E5DADA;
-  position: relative;
+  position: absolute;
+  /* margin-left: 247px; */
   opacity: 1;
   height: 1.5em;
   width: 10px;
@@ -47,16 +62,19 @@ b {
   user-select: none;       /* Prevent text selection */
   pointer-events: none;    /* Ignore mouse events */
 }
+
 @keyframes blinker {
   50% {
     opacity: 0;
   }
 }
+
 #command {
   cursor: text;
   height: 50px;
   color: #E5DADA;
 }
+
 #liner {
   line-height: 1.3em;
   margin-top: -2px;
@@ -64,6 +82,7 @@ b {
   animation-delay: 0.6s;
   opacity: 0;
 }
+
 @keyframes show {
   from {
     opacity: 0;
@@ -72,6 +91,7 @@ b {
     opacity: 1;
   }
 }
+
 /* Cursor End */
 p {
   display: block;
@@ -93,6 +113,7 @@ p {
 .no-animation {
   animation: typing 0 steps(30, end);
 }
+
 .margin {
   margin-left: 20px;
 }
@@ -119,36 +140,46 @@ p {
 .index {
   color: #DCDCCC;
 }
+
 .color2 {
   color: #E59500;
 }
+
 .color3 {
   color: #ff0000;
 }
+
 .command {
   color: #d7447c;
   text-shadow: 0 0 5px #840032;
 }
+
 .error {
   color: #E59500;
 }
+
 .white {
   color: #fff;
 }
+
 .inherit,
 a {
   color: #9C8394;
 }
+
 a {
   text-decoration: inherit;
 }
+
 a:hover {
   background: #E5DADA;
   color: #881b45;
 }
+
 a:focus {
   outline: 0;
 }
+
 #prompt {
   color: #E5DADA;
 }

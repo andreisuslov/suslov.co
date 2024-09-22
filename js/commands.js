@@ -178,7 +178,8 @@ help = [
 
 banner = [
   '<br>',
-  '<span class="index">Andrei Suslov\'s personal website, no rights reserved. </span>',
+  '<span class="index">Andrei Suslov\'s personal website.</span>',
+  '<span class="index">No rights reserved. </span>',
   '<br>',
     "<span>                  .----.<span>",
     "<span>      .---------. | == |<span>",
@@ -191,7 +192,7 @@ banner = [
     "<span>    /:::=======:::\\`\\`\\<span>",
     "<span>    `\"\"\"\"\"\"\"\"\"\"\"\"\"`  '-'<span>",
   '<br>',
-  '<span class="color2">Welcome to my interactive web terminal.</span>',
+  '<span class="color2">Welcome to my web terminal!</span>',
   '<span class="color2">For a list of available commands, type</span> <span class="command">"help"</span><span class="color2">.</span>',
   '<br>'
 ];
