@@ -31,7 +31,7 @@ const COMMAND_SUGGESTIONS = [
 ];
 
 // Global variables
-let cursor, canvas, ctx, cursorIndex = 0;
+let cursor, canvas, context, cursorIndex = 0;
 let lastCommand = "";
 let commandIndex = 0;
 let passwordModeEnabled = false;
@@ -46,14 +46,14 @@ let before, liner, command, textArea, terminal;
 function initialize() {
   cursor = $('cursor');
   canvas = document.createElement('canvas');
-  ctx = canvas.getContext('2d');
+  context = canvas.getContext('2d');
 
   const promptStyle = window.getComputedStyle($('prompt'));
-  ctx.font = `${promptStyle.fontSize} ${promptStyle.fontFamily}`;
+  context.font = `${promptStyle.fontSize} ${promptStyle.fontFamily}`;
 
   const promptText = $('prompt').textContent;
   // 53 looks good on my desktop, I don't feel like calaculating it 
-  const promptWidth = ctx.measureText(promptText).width + 53; 
+  const promptWidth = context.measureText(promptText).width + 53; 
 
   cursor.style.left = '0px';
   cursor.style.marginLeft = `${promptWidth}px`;
@@ -116,6 +116,8 @@ function moveIt(event) {
     [KEY_CODES.E]: () => moveCursorToEnd(textArea),
     [KEY_CODES.LEFT_ARROW]: () => moveCursorLeft(textArea),
     [KEY_CODES.RIGHT_ARROW]: () => moveCursorRight(textArea),
+    [KEY_CODES.ENTER]: () => moveCursorToEnd(textArea),
+    [KEY_CODES.TAB]: () => autocompleteCommand(),
   };
 
   if (isCtrlPressed && actions[keyCode]) {
@@ -157,7 +159,7 @@ function setCursorPosition(sourceElement, position) {
 // Update cursor position based on text width
 function updateCursorPosition(text) {
   const substring = text.slice(0, cursorIndex);
-  const width = ctx.measureText(substring).width;
+  const width = context.measureText(substring).width;
   cursor.style.left = `${width}px`;
 }
 
@@ -335,6 +337,7 @@ function autocompleteCommand() {
   }
 
   lastCommand = currentInput; // Update last command input
+  moveCursorToEnd(textArea);
 }
 
 // Update command line with available commands
